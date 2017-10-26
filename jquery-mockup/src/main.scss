@@ -1,0 +1,17 @@
+@import "~bootstrap/scss/bootstrap";
+$primary-background: #FD0A0A;
+$monospace: "Courier New", Courier, monospace;
+
+header {
+    background: $primary-background;
+    margin-bottom: 10px;
+}
+
+.card {
+    .btn-primary {
+        font-family: $monospace;
+    } 
+    h4 {
+        text-align: center;
+    }   
+}
