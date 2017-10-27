@@ -9,19 +9,31 @@ export class User {
     exercise:  Exercise[] = [];
     completed: number = 0;
     drawExercise(){
-        $("#my-exercises").html(this.exercise.map(x=> `<li class="list-group-item">${x.text}</li>`).join(""))
+        $("#my-exercises").html(this.exercise.map(x=> `<a href="#" class="list-group-item list-group-item-action">${x.text}</a>`).join(""))
     }
 }
 
 export class Room {
     players: User[] = [new User(), new User()];
     picture: string = "http://www.zelda.com/assets/images/centerstage/hyrule-warriors-legends/hyrule-warriors-legends-characters.png";
-    exercise: Exercise[] = [];
+    exercise: Exercise[] = [
+        {text: "Sit ups"},
+        {text: "Push ups"}
+    ];
     drawPicture(){
         $("#picture").attr("src", this.picture);
     }
     drawExercise(){
         $("#completed-exercises").html(this.exercise.map(x=> `<li class="list-group-item">${x.text}</li>`).join(""))
+    }
+
+    addExercise(ex:string){
+        var exer;
+        exer = new Exercise();
+        exer.text = ex;
+        this.exercise.push(exer);
+        room.drawExercise();
+
     }
 }
 
@@ -33,10 +45,10 @@ export class Game {
         "http://www.zelda.com/assets/images/centerstage/hyrule-warriors-legends/hyrule-warriors-legends-characters.png"
     ];
     exercise: Exercise[] = [
-        {text: "When you wake up and want to destroy the world!"},
-        {text: "When you just can't give less of a fudge"},
-        {text: "I always win at losing"},
-        {text: "Nice Approach"}
+        {text: "Jogging"},
+        {text: "Arms"},
+        {text: "Legs"},
+        {text: "Weights"}
     ];
 }
 
@@ -47,6 +59,19 @@ const room = new Room();
 const me = new User();
 
 room.drawExercise();
+//room.addExercise("holamundo");
+//room.drawExercise();
 
 me.exercise = game.exercise;
 me.drawExercise();
+
+//TODO When a selection is clicked get the index
+// obtain the object from that index and get the "text" exercise[0].text
+//call Room.addExercise(exercise[0].text) to add the new object to the array
+// redraw the completed exercise list
+
+$("#my-exercises a").click(function(e){
+    e.preventDefault();
+    room.addExercise($(this).text());
+    room.drawExercise();
+})
